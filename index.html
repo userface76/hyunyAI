@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#111827" />
+  <title>hyunyAI — 시현의 창작 AI 친구</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">H</div>
+        <div>
+          <strong>hyunyAI</strong>
+          <small>시현의 창작 AI 친구</small>
+        </div>
+      </div>
+
+      <nav id="nav">
+        <button class="nav-btn active" data-view="home">🏠 홈</button>
+        <button class="nav-btn" data-view="worlds">🌌 세계관</button>
+        <button class="nav-btn" data-view="games">🎮 게임</button>
+        <button class="nav-btn" data-view="stories">📖 이야기</button>
+        <button class="nav-btn" data-view="making">✂️ 만들기·도안</button>
+        <button class="nav-btn" data-view="characters">🤖 캐릭터</button>
+        <button class="nav-btn chat-nav" data-view="chat">💬 AI 친구</button>
+      </nav>
+
+      <div class="sidebar-note">
+        <b>기억 원칙</b>
+        <span>세계관은 허락 없이 섞지 않기</span>
+        <span>최신 확정 설정 우선하기</span>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">CREATIVE MEMORY LAB</p>
+          <h1 id="pageTitle">오늘 뭐 만들까?</h1>
+        </div>
+        <div class="search-wrap">
+          <input id="globalSearch" type="search" placeholder="게임, 로봇, 캐릭터 검색..." />
+        </div>
+      </header>
+
+      <section id="homeView" class="view active">
+        <div class="hero">
+          <div>
+            <span class="badge">HYUNY AI 0.1</span>
+            <h2>시현의 생각을<br/>잊지 않는 AI 친구</h2>
+            <p>게임, 이야기, 세계관, 캐릭터, 종이로봇 도안을 저장하고 다시 이어서 만들어요.</p>
+            <button class="primary" data-go="chat">hyunyAI와 대화하기 →</button>
+          </div>
+          <div class="hero-orb">H</div>
+        </div>
+
+        <div id="stats" class="stats"></div>
+
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">MEMORY</p>
+            <h3>최근 창작 기억</h3>
+          </div>
+        </div>
+        <div id="recentGrid" class="card-grid"></div>
+      </section>
+
+      <section id="listView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow" id="listEyebrow">ARCHIVE</p>
+            <h3 id="listTitle">창작 자료</h3>
+          </div>
+          <span id="listCount" class="count-pill"></span>
+        </div>
+        <div id="cardGrid" class="card-grid"></div>
+      </section>
+
+      <section id="charactersView" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">CHARACTERS</p>
+            <h3>캐릭터 인덱스</h3>
+          </div>
+        </div>
+        <article id="charactersDoc" class="doc-panel">불러오는 중...</article>
+      </section>
+
+      <section id="detailView" class="view">
+        <button id="backBtn" class="ghost">← 목록으로</button>
+        <article id="detailDoc" class="doc-panel detail"></article>
+      </section>
+
+      <section id="chatView" class="view">
+        <div class="chat-layout">
+          <div class="chat-panel">
+            <div class="chat-head">
+              <div class="ai-avatar">H</div>
+              <div>
+                <strong>hyunyAI</strong>
+                <span id="chatMode">창작 기억 연결됨</span>
+              </div>
+            </div>
+            <div id="messages" class="messages">
+              <div class="message ai">
+                <div class="bubble">
+                  시현아 안녕 😎 지금까지 만든 세계관, 게임, 만들기 아이디어를 찾아서 같이 이어갈 수 있어.
+                  <br/><br/>예: <b>“메카폴리스 어디까지 했지?”</b> 또는 <b>“내 게임 아이디어 보여줘”</b>
+                </div>
+              </div>
+            </div>
+            <form id="chatForm" class="composer">
+              <textarea id="chatInput" rows="1" placeholder="hyunyAI에게 말해봐..." required></textarea>
+              <button class="send" type="submit">➤</button>
+            </form>
+          </div>
+
+          <aside class="memory-panel">
+            <p class="eyebrow">RELATED MEMORY</p>
+            <h3>관련 기억</h3>
+            <div id="relatedMemory" class="related-list">
+              <p class="muted">대화를 시작하면 관련 자료를 찾아줄게.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
