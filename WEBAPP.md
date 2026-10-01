@@ -31,3 +31,7 @@ API 키는 절대로 GitHub 파일이나 브라우저 JavaScript에 직접 넣�
 이 저장소는 현재 public이므로 **개인정보나 전체 대화 원문을 저장하지 않습니다.**
 저장 대상은 세계관, 게임 규칙, 캐릭터, 만들기 방법 등 창작 데이터 중심으로 유지하는 것을 권장합니다.
 실제 개인 대화 기록까지 저장하려면 저장소를 private으로 전환하고 별도의 인증/DB를 사용하는 구조가 좋습니다.
+
+
+## Live Web App
+- https://hyunyai.userface76.workers.dev
