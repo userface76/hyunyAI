@@ -17,3 +17,9 @@
 
 ### 앞으로
 과거 대화에서 더 찾은 설정, 완성 이미지, 도안 파일, HTML 게임 파일은 발견되는 순서대로 추가한다.
+
+
+## D1 memory binding
+- Cloudflare Pages binding name: HYUNY_DB
+- Database: hyunyai-memory
+- Status: binding configured; deployment trigger added on 2026-10-02.
