@@ -1,133 +1,106 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#111827" />
-  <title>hyunyAI — 시현의 창작 AI 친구</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#6c63ff"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="hyunyAI"/>
+  <link rel="manifest" href="/manifest.webmanifest"/>
+  <link rel="icon" href="/icons/app-icon.svg"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <title>hyunyAI</title>
 </head>
 <body>
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">H</div>
-        <div>
-          <strong>hyunyAI</strong>
-          <small>시현의 창작 AI 친구</small>
-        </div>
+  <section id="welcomeScreen" class="welcome-screen">
+    <div class="welcome-glow glow-a"></div>
+    <div class="welcome-glow glow-b"></div>
+    <div class="welcome-card">
+      <div class="welcome-badge">HYUNY AI</div>
+      <div class="character-stage intro-stage">
+        <div class="character-ring"></div>
+        <img src="/assets/characters/police-saver-mini.webp" alt="시현이 만든 폴리스세이버 캐릭터" class="bot-character intro-character"/>
+        <div class="spark s1">✦</div><div class="spark s2">✦</div><div class="spark s3">✦</div>
       </div>
+      <h1>시현아, 왔어?</h1>
+      <p>오늘은 뭐 만들고 놀까?<br/>게임도, 이야기로봇도, 새로운 세계도 같이 만들자.</p>
+      <button id="enterAppBtn" class="big-start">시현AI 만나기</button>
+      <button id="installBtn" class="install-btn hidden">휴대폰에 앱으로 설치</button>
+      <small>시현이의 창작 기억을 함께 키우는 AI 친구</small>
+    </div>
+  </section>
 
-      <nav id="nav">
-        <button class="nav-btn active" data-view="home">🏠 홈</button>
-        <button class="nav-btn" data-view="worlds">🌌 세계관</button>
-        <button class="nav-btn" data-view="games">🎮 게임</button>
-        <button class="nav-btn" data-view="stories">📖 이야기</button>
-        <button class="nav-btn" data-view="making">✂️ 만들기·도안</button>
-        <button class="nav-btn" data-view="characters">🤖 캐릭터</button>
-        <button class="nav-btn chat-nav" data-view="chat">💬 AI 친구</button>
-      </nav>
-
-      <div class="sidebar-note">
-        <b>기억 원칙</b>
-        <span>세계관은 허락 없이 섞지 않기</span>
-        <span>최신 확정 설정 우선하기</span>
+  <div id="app" class="app hidden">
+    <header class="app-header">
+      <div class="brand-mini">
+        <span class="brand-dot">H</span>
+        <div><b>hyunyAI</b><small>시현의 AI 친구</small></div>
       </div>
-    </aside>
+      <button id="installTopBtn" class="header-btn hidden">설치</button>
+    </header>
 
-    <main>
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">CREATIVE MEMORY LAB</p>
-          <h1 id="pageTitle">오늘 뭐 만들까?</h1>
-        </div>
-        <div class="search-wrap">
-          <input id="globalSearch" type="search" placeholder="게임, 로봇, 캐릭터 검색..." />
-        </div>
-      </header>
-
-      <section id="homeView" class="view active">
-        <div class="hero">
-          <div>
-            <span class="badge">HYUNY AI 0.1</span>
-            <h2>시현의 생각을<br/>잊지 않는 AI 친구</h2>
-            <p>게임, 이야기, 세계관, 캐릭터, 종이로봇 도안을 저장하고 다시 이어서 만들어요.</p>
-            <button class="primary" data-go="chat">hyunyAI와 대화하기 →</button>
+    <main class="mobile-main">
+      <section id="chatView" class="view active">
+        <div class="hero-bot">
+          <div id="botStage" class="character-stage">
+            <div class="character-ring"></div>
+            <img src="/assets/characters/police-saver-mini.webp" alt="hyunyAI 캐릭터" class="bot-character"/>
           </div>
-          <div class="hero-orb">H</div>
+          <div id="botGreeting" class="bot-greeting">오늘 뭐 할까? 😎</div>
         </div>
 
-        <div id="stats" class="stats"></div>
-
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">MEMORY</p>
-            <h3>최근 창작 기억</h3>
-          </div>
+        <div class="quick-row">
+          <button data-quick="게임 만들자">🎮 게임</button>
+          <button data-quick="이야기 만들자">📖 이야기</button>
+          <button data-quick="로봇이나 만들기 도안 만들자">🤖 만들기</button>
+          <button data-quick="내가 만든 세계관 보여줘">🌌 세계관</button>
         </div>
-        <div id="recentGrid" class="card-grid"></div>
+
+        <div id="messages" class="messages">
+          <div class="message ai"><div class="bubble">시현아 안녕! 예전에 만든 것들도 기억에서 찾아볼 수 있어. <b>“메카폴리스 어디까지 했지?”</b>처럼 물어봐도 돼.</div></div>
+        </div>
+
+        <form id="chatForm" class="composer">
+          <textarea id="chatInput" rows="1" placeholder="시현AI에게 말해봐..." required></textarea>
+          <button type="submit" class="send-btn">➤</button>
+        </form>
       </section>
 
-      <section id="listView" class="view">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow" id="listEyebrow">ARCHIVE</p>
-            <h3 id="listTitle">창작 자료</h3>
-          </div>
-          <span id="listCount" class="count-pill"></span>
+      <section id="createView" class="view">
+        <div class="page-title"><p>같이 만들기</p><h2>뭘 만들어볼까?</h2></div>
+        <div class="create-grid">
+          <button class="create-card" data-start="새로운 게임 아이디어부터 같이 만들자"><span>🎮</span><b>게임 만들기</b><small>규칙·캐릭터·플레이 방식</small></button>
+          <button class="create-card" data-start="새로운 이야기를 같이 만들자"><span>📚</span><b>이야기 만들기</b><small>주인공·사건·다음 장면</small></button>
+          <button class="create-card image-card" data-start="종이로봇이나 만들기 도안을 같이 만들자">
+            <img src="/assets/characters/robot-lab-poster-mini.webp" alt="시현 종이로봇 연구소 이미지"/>
+            <div><b>로봇·도안 만들기</b><small>종이로봇·변신·공작</small></div>
+          </button>
+          <button class="create-card" data-start="새 캐릭터를 같이 만들어보자"><span>✨</span><b>캐릭터 만들기</b><small>이름·능력·모습·성격</small></button>
         </div>
-        <div id="cardGrid" class="card-grid"></div>
       </section>
 
-      <section id="charactersView" class="view">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">CHARACTERS</p>
-            <h3>캐릭터 인덱스</h3>
-          </div>
-        </div>
-        <article id="charactersDoc" class="doc-panel">불러오는 중...</article>
+      <section id="worldView" class="view">
+        <div class="page-title"><p>내 세계관</p><h2>시현이 만든 세계들</h2></div>
+        <div id="worldCards" class="world-grid"></div>
       </section>
 
-      <section id="detailView" class="view">
-        <button id="backBtn" class="ghost">← 목록으로</button>
-        <article id="detailDoc" class="doc-panel detail"></article>
-      </section>
-
-      <section id="chatView" class="view">
-        <div class="chat-layout">
-          <div class="chat-panel">
-            <div class="chat-head">
-              <div class="ai-avatar">H</div>
-              <div>
-                <strong>hyunyAI</strong>
-                <span id="chatMode">창작 기억 연결됨</span>
-              </div>
-            </div>
-            <div id="messages" class="messages">
-              <div class="message ai">
-                <div class="bubble">
-                  시현아 안녕 😎 지금까지 만든 세계관, 게임, 만들기 아이디어를 찾아서 같이 이어갈 수 있어.
-                  <br/><br/>예: <b>“메카폴리스 어디까지 했지?”</b> 또는 <b>“내 게임 아이디어 보여줘”</b>
-                </div>
-              </div>
-            </div>
-            <form id="chatForm" class="composer">
-              <textarea id="chatInput" rows="1" placeholder="hyunyAI에게 말해봐..." required></textarea>
-              <button class="send" type="submit">➤</button>
-            </form>
-          </div>
-
-          <aside class="memory-panel">
-            <p class="eyebrow">RELATED MEMORY</p>
-            <h3>관련 기억</h3>
-            <div id="relatedMemory" class="related-list">
-              <p class="muted">대화를 시작하면 관련 자료를 찾아줄게.</p>
-            </div>
-          </aside>
+      <section id="memoryView" class="view">
+        <div class="page-title"><p>창작 보관함</p><h2>내가 만든 것들</h2></div>
+        <div class="lab-banner">
+          <img src="/assets/characters/robot-lab-poster-mini.webp" alt="시현 종이로봇 연구소"/>
+          <div><b>시현 종이로봇 연구소</b><span>현이가 만든 이미지와 도안도 계속 모아둘 수 있어요.</span></div>
         </div>
+        <div id="memoryCards" class="memory-grid"></div>
       </section>
     </main>
+
+    <nav class="bottom-nav">
+      <button class="tab active" data-view="chatView"><span>💬</span>AI 친구</button>
+      <button class="tab" data-view="createView"><span>🛠️</span>만들기</button>
+      <button class="tab" data-view="worldView"><span>🌌</span>내 세계</button>
+      <button class="tab" data-view="memoryView"><span>🗂️</span>보관함</button>
+    </nav>
   </div>
 
   <script src="/app.js" defer></script>
