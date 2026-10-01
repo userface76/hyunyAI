@@ -4,10 +4,19 @@ const state={
   installPrompt:null,
   history:loadJSON('hyunyAI_history_v2',[]),
   training:loadJSON('hyunyAI_training_v1',[]),
-  speaker:localStorage.getItem('hyunyAI_speaker')||'sihyun'
+  speaker:localStorage.getItem('hyunyAI_speaker')||'sihyun',
+  ownerKey:getOrCreateId('hyunyAI_owner_key','hyu_'),
+  sessionId:getOrCreateId('hyunyAI_session_id','sess_'),
+  remoteMemories:[],
+  dbReady:false
 };
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
+function getOrCreateId(key,prefix){
+  let v=localStorage.getItem(key);
+  if(!v){v=prefix+(crypto.randomUUID?crypto.randomUUID():Date.now()+'_'+Math.random().toString(36).slice(2));localStorage.setItem(key,v)}
+  return v;
+}
 function loadJSON(key,fallback){
   try{return JSON.parse(localStorage.getItem(key))||fallback}catch{return fallback}
 }
@@ -24,7 +33,8 @@ async function init(){
     renderWorlds();renderMemory();
   }catch(e){console.error(e)}
   bind();
-  if(state.history.length) $('#botGreeting').textContent='지난 대화도 기억하고 있어 😎';
+  await loadRemoteMemory();
+  if(state.history.length) $('#botGreeting').textContent=state.dbReady?'지난 대화도 DB에서 기억하고 있어 😎':'지난 대화도 기억하고 있어 😎';
   if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 }
 
@@ -110,8 +120,9 @@ async function onChat(e){
   const past=conversationMemory(msg,4);
   const memoryDocs=[
     ...related.map(d=>({title:d.title,type:d.type,text:d.text.slice(0,4000)})),
+    ...state.remoteMemories.slice(0,6).map((m,i)=>({title:m.subject||('장기 기억 '+(i+1)),type:'memory',text:m.content})),
     ...past.map((p,i)=>({title:'이전 대화 기억 '+(i+1),type:'conversation',text:'시현: '+p.user+'\nhyunyAI: '+p.assistant}))
-  ].slice(0,6);
+  ].slice(0,10);
 
   const mode=detectMode(msg);
   let reply='';
@@ -136,8 +147,48 @@ async function onChat(e){
   state.history=state.history.slice(-120);
   saveJSON('hyunyAI_history_v2',state.history);
   saveTrainingPair(msg,reply,mode,related);
+  saveRemoteTurn(msg,reply,mode,related).catch(()=>{});
   $('#botGreeting').textContent=related[0]?'기억 찾았어! 같이 이어가자 😎':'좋아, 같이 만들어보자!';
   setTalking(false);
+}
+
+
+async function loadRemoteMemory(){
+  try{
+    const r=await fetch('/api/memory?ownerKey='+encodeURIComponent(state.ownerKey),{cache:'no-store'});
+    if(!r.ok)return;
+    const data=await r.json();
+    if(!data.ok)return;
+    state.dbReady=true;
+    state.remoteMemories=Array.isArray(data.memories)?data.memories:[];
+    if(Array.isArray(data.recent)&&data.recent.length){
+      state.history=data.recent.map(x=>({role:x.role,content:x.content})).slice(-40);
+      saveJSON('hyunyAI_history_v2',state.history);
+    }
+  }catch{}
+}
+
+async function saveRemoteTurn(user,assistant,mode,related){
+  const r=await fetch('/api/memory',{
+    method:'POST',
+    headers:{'content-type':'application/json'},
+    body:JSON.stringify({
+      action:'save_turn',
+      ownerKey:state.ownerKey,
+      sessionId:state.sessionId,
+      user,
+      assistant,
+      mode,
+      related:(related||[]).map(x=>x.id)
+    })
+  });
+  if(r.ok){
+    state.dbReady=true;
+    const data=await r.json().catch(()=>null);
+    if(data?.saved && /(기억해|저장해|이걸로\s*정하|설정은|이름은|앞으로)/.test(user)){
+      loadRemoteMemory().catch(()=>{});
+    }
+  }
 }
 
 function saveTrainingPair(user,assistant,mode,related){
