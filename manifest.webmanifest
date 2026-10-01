@@ -1,0 +1,12 @@
+{
+  "name":"hyunyAI - 시현의 AI 친구",
+  "short_name":"hyunyAI",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#f6f7ff",
+  "theme_color":"#6c63ff",
+  "description":"시현이의 게임, 이야기, 세계관과 만들기를 함께 키우는 AI 친구",
+  "icons":[
+    {"src":"/icons/app-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
