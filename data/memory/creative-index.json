@@ -1,0 +1,26 @@
+{
+  "project": "hyunyAI",
+  "purpose": "시현의 게임, 이야기, 세계관, 캐릭터, 만들기 아이디어를 저장하고 다시 이어주는 AI 친구",
+  "worlds": [
+    {"id":"star-guardians","title":"스타가디언즈","file":"data/worlds/star-guardians.md"},
+    {"id":"paper-savers","title":"페이퍼세이버즈","file":"data/worlds/paper-savers.md"},
+    {"id":"mecapolis","title":"최강경찰 메카폴리스","file":"data/worlds/mecapolis.md"},
+    {"id":"hyuni-village","title":"현이마을","file":"data/worlds/hyuni-village.md"},
+    {"id":"toy-story-fan","title":"토이 스토리 팬 창작","file":"data/worlds/toy-story-fan.md"}
+  ],
+  "stories": [
+    {"id":"baby-adventures","title":"아기들의 모험/먹방","file":"data/stories/baby-adventures.md"}
+  ],
+  "games": [
+    {"id":"game-ideas","title":"게임 아이디어 모음","file":"data/games/game-ideas.md"}
+  ],
+  "making": [
+    {"id":"paper-robot-designs","title":"종이로봇·변신로봇 도안 규칙","file":"data/making/paper-robot-designs.md"}
+  ],
+  "rules": {
+    "keep_worlds_separate": true,
+    "prefer_latest_confirmed_setting": true,
+    "mark_unconfirmed_ideas": true,
+    "save_next_step": true
+  }
+}
